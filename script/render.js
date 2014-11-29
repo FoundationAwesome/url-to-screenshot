@@ -31,9 +31,9 @@ page.viewportSize = {
  */
 
 page.onConsoleMessage =
-  page.onConfirm = 
-  page.onPrompt =
-  page.onError = noop;
+page.onConfirm = 
+page.onPrompt =
+page.onError = noop;
 
 /**
  * Open and render page.
@@ -42,24 +42,26 @@ page.onConsoleMessage =
 page.open(url, function (status) {
   if (status !== 'success') throw new Error('Unable to load');
   window.setTimeout(function () {
-    page.evaluate(function() {
-      if (!document.body.style.background) {
-        document.body.style.backgroundColor = 'white';
-      }
-    });
-
+    // page.evaluate(function() {
+    //   if (!document.body.style.background) {
+    //     document.body.style.backgroundColor = 'white';
+    //   }
+    // });
     var base64 = page.renderBase64(format)
+
     var html = page.evaluate(function() {
-        return document.body.innerHTML
+        return document.documentElement.innerHTML
     })
+
+    var date = new Date()
     var pack = {
       url: url, 
-      body: html, 
+      html: html, 
       shot: base64, 
-      date: new Date()
+      date: date
     }
 
-    console.log(JSON.toJSON(pack));
+    console.log(JSON.stringify(pack));
     phantom.exit();
   }, timeout);
 });
