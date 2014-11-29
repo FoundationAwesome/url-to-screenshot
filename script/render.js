@@ -31,9 +31,9 @@ page.viewportSize = {
  */
 
 page.onConsoleMessage =
-page.onConfirm = 
-page.onPrompt =
-page.onError = noop;
+  page.onConfirm = 
+  page.onPrompt =
+  page.onError = noop;
 
 /**
  * Open and render page.
@@ -47,7 +47,19 @@ page.open(url, function (status) {
         document.body.style.backgroundColor = 'white';
       }
     });
-    console.log(page.renderBase64(format));
+
+    var base64 = page.renderBase64(format)
+    var html = page.evaluate(function() {
+        return document.body.innerHTML
+    })
+    var pack = {
+      url: url, 
+      body: html, 
+      shot: base64, 
+      date: new Date()
+    }
+
+    console.log(JSON.toJSON(pack));
     phantom.exit();
   }, timeout);
 });
