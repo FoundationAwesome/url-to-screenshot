@@ -148,15 +148,16 @@ Screenshot.prototype.capture = function(fn) {
     this._width, this._height, this._timeout, this._format
   ];
   
+  if (this._sslProtocol) {
+    args.push('--ssl-protocol=' + 'tlsv1')//any')//this._sslProtocol);
+  }
   if (this._ignoreSslErrors) {
     args.push('--ignore-ssl-errors=yes');
   }
   if (this._sslCertificatesPath) {
     args.push('--ssl-certificates-path=' + this._sslCertificatesPath);
   }
-  if (this._sslProtocol) {
-    args.push('--ssl-protocol=' + 'any')//this._sslProtocol);
-  }
+
 
   args.push('--web-security=false')
 
