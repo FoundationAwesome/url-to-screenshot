@@ -147,7 +147,7 @@ Screenshot.prototype.capture = function(fn) {
     __dirname + '/script/render.js', this.url,
     this._width, this._height, this._timeout, this._format
   ];
-  
+
   if (this._sslProtocol) {
     args.push('--ssl-protocol=' + 'tlsv1')//any')//this._sslProtocol);
   }
