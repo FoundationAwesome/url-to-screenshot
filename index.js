@@ -16,7 +16,7 @@ function Screenshot(url, opts) {
 
   this.width(1024);
   this.height(768);
-  this.timeout(0);
+  this.timeout(11000);
   this.format('png');
   this.ignoreSslErrors(false);
   this.sslCertificatesPath(null);
@@ -149,19 +149,21 @@ Screenshot.prototype.capture = function(fn) {
   ];
   
   if (this._ignoreSslErrors) {
-    args.push('--ignore-ssl-errors');
+    args.push('--ignore-ssl-errors=yes');
   }
   if (this._sslCertificatesPath) {
     args.push('--ssl-certificates-path=' + this._sslCertificatesPath);
   }
   if (this._sslProtocol) {
-    args.push('--ssl-protocol=' + this._sslProtocol);
+    args.push('--ssl-protocol=' + 'any')//this._sslProtocol);
   }
+
+  args.push('--web-security=false')
 
   var opts = {
     maxBuffer: Infinity
   };
-
+  console.log('\texecuting phantomjs... ', args.join(' '), opts,'\n' )
   exec('phantomjs ' + args.join(' '), opts, function (err, stdout) {
     fn(err, stdout)
   });
